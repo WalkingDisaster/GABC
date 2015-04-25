@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ExampleApplication.Business.Data.Entities.Hero>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlsoKnownAs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Types)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DispatchStatus)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlsoKnownAs)
+        </td>
+        <td>
+            @Html.Encode(item.Types.ToString())
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DispatchStatus)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

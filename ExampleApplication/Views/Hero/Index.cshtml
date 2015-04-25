@@ -1,0 +1,20 @@
+﻿@model ExampleApplication.Business.Data.Entities.Hero
+
+@{
+    ViewBag.Title = "Hero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Hero</title>
+    </head>
+    <body>
+        <div>
+              @Html.ActionLink("Destroy Everything!", "DestroyEverything");
+              @Html.ActionLink("List", "List");
+        </div>
+    </body>
+</html>

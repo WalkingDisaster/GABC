@@ -1,0 +1,83 @@
+﻿@using ExampleApplication.Business.Data.Entities
+@model ExampleApplication.Business.Data.Entities.Hero
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Hero</legend>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    ---
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.AlsoKnownAs)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AlsoKnownAs)
+    </div>
+    ---
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.DispatchStatus)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DispatchStatus)
+        @if (Model.DispatchStatus == DispatchType.Dispatched)
+        {
+            @Html.FormatValue(Model.DispatchLocation, " to {0}")
+        }
+    </div>
+    ---
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Types)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Types)
+    </div>
+    @if (Model.Weapons != null)
+    {
+        @Html.Encode("---")
+        <div class="display-label">
+            @Html.DisplayNameFor(model => model.Weapons)
+        </div>
+        foreach (var weapon in Model.Weapons)
+        {
+            <div class="display-field">
+                @weapon.Type
+                @if (weapon.Name != null)
+                {
+                    @Html.FormatValue(weapon.Name, ": {0}")
+                }
+            </div>
+        }
+    }
+</fieldset>
+
+@if (Model.DispatchStatus == DispatchType.Available)
+{
+    using (Html.BeginForm("Dispatch", "Hero", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.Id)
+        <div>Dispatch To: <input type="text" name="location" /></div>
+        <input type="submit" name="Submit" value="Dispatch" />
+    }
+}
+else
+{
+    using (Html.BeginForm("Recall", "Hero", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.Id)
+        <input type="submit" name="Submit" value="Recall" />
+    }
+}
+<p>
+    @Html.ActionLink("Back to List", "List")
+</p>
